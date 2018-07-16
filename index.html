@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Breaking Bad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    
+</head>
+<style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-image: url('pic.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+    }
+    #display {
+        width: 800px;
+        height: 325px;
+        background-color: lightgray;
+        border-radius: 20px;
+        
+        margin-left: 40px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    #quote {
+        font-size: 40px;
+        padding-top: 20px;
+        padding-right: 20px;
+    }
+
+    #author {
+        font-size: 21px;
+        padding-bottom: 20px;
+        float: right;
+        padding-right: 35px;
+        padding-top: 20px;
+
+
+    }
+    #button{
+        float: left;
+        margin-left: 40px;
+    }
+    p{
+     font-size: 20px; 
+        font-family: Quicksand;
+        padding-bottom: 50px;
+    }
+    h1{
+        font-family: Quicksand;
+        font-size: 55px;
+        padding-top: 50px;
+    }
+</style>
+
+<body>
+    <div class="container-fluid">
+       
+        <h1 class="text-white pb-2  pl-4">Breaking Bad Quotes</h1>
+        <p class="text-white  pl-4">Breaking bad quotes to all the fans out there.......</p>
+    </div>
+    <div class="container col-lg-10 col-md-10 col-sm-10 col-10" id="display"></div>
+    <div class="btn btn-primary btn-lg mt-4  text-center" id="button">Get Quotes</div>
+    
+    
+    <script>
+        document.getElementById('button').addEventListener('click', loadData);
+
+        function loadData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://breaking-bad-quotes.herokuapp.com/v1/quotes', true);
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+
+                    var output = ' ';
+                    for (var i in data){
+                        output += '<ul>' +
+                        '<li id="quote"><q id="quotation">' + data[i].quote + '</q></li>' +
+                        '<li id="author"><b>&#8210 ' + data[i].author + '</b></li>' +
+                        '</ul>'
+                    }
+                }
+                document.getElementById('display').innerHTML = output;
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
